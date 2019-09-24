@@ -1,0 +1,22 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "cwd": "${workspaceFolder}/src",
+            "program": "${workspaceFolder}/src/server.js",
+            "env": {
+                "SERVER_PORT": "4003",
+                // "DB_HOST": "erp-authentication-db",
+                // "DB_PORT": "27027",
+                // "DB_NAME": "erp-authentication-db"
+            },
+            "runtimeVersion": "8.15.0"
+        }
+    ]
+}

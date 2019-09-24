@@ -1,0 +1,9 @@
+# docker compose file
+version: "2"
+services:
+  local_mongo:
+      container_name: authentication_db
+      image: mongo:4.0
+      ports:
+        - "27027:27017"
+      

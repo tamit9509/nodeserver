@@ -1,0 +1,10 @@
+FROM node:8
+
+COPY . /qalorie-backend
+COPY ./docker/run.sh /run.sh
+
+RUN cd /qalorie-backend/app && \
+  npm install
+
+# Run app
+ENTRYPOINT ["/bin/bash", "/run.sh"]

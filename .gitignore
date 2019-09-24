@@ -1,0 +1,6 @@
+src/node_modules
+src/swagger.json
+**/node_modules/**.*
+.DS_Store
+.env
+db-data
