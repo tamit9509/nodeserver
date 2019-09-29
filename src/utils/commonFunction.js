@@ -153,6 +153,11 @@ commonFunctions.emailTypes = (user, type, data) => {
   return EmailStatus;
 };
 
+commonFunctions.getTemplateString = (username, path, template) => {
+  const link = `${CONFIG.DOMAIN.FRONTEND_URL}/${path}`;
+  return template.replace('{{username}}', username).replace('{{link}}', link);
+}
+
 commonFunctions.renderTemplate = (template, data) => {
   return handlebars.compile(template)(data);
 }

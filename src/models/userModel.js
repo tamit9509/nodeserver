@@ -13,8 +13,8 @@ const userSchema = new Schema({
     phoneNumber: { type: String, required: true },
     password: { type: String },
     createdAt: { type: Date, default: Date.now },
-    // verificationSession: { type: Date },
     emailVerificationStatus: { type: Boolean, default: false },
+    resetPasswordSession: { type: Date },
     mobileVerificationStatus: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
     deletedAt: { type: Date }
