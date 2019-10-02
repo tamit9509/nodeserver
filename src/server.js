@@ -75,6 +75,7 @@ let startServer = async () => {
     useCreateIndex: true,
     reconnectTries: 20,
     reconnectInterval: 2000,
+    useUnifiedTopology: true,
   });
   console.log('Mongo connected at ', CONFIG.DB.URL);
   await routeUtils.route(app, routes);

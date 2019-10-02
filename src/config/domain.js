@@ -1,6 +1,6 @@
 module.exports = {
   PROTOCOL: process.env.DOMAIN_PROTOCOL || 'http',
-  HOST: process.env.DOMAIN_HOST || '127.0.0.1',
+  HOST: process.env.DOMAIN_HOST || '172.31.6.27',
   PORT: process.env.DOMAIN_PORT === '' ? process.env.DOMAIN_PORT : '4000',
   get URL() { return `${this.PROTOCOL}://${this.HOST}${!!this.PORT ? ':' + this.PORT : ''}` },
   FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:4200',

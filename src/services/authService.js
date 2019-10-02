@@ -33,11 +33,9 @@ authService.registerUser = async (payload) => {
     _id: response.user._id,
     email: response.user.email
   }
-  const token = commonFunctions.encryptJwt(jwtPayload);             // create jwt token
-  let template = emailTemplate.WELCOME_VERIFICATION_EMAIL;        // get verification email template
-  template = template.replace('{{username}}', payload.name);                   // replace username
-  const verifyLink = `${CONFIG.DOMAIN.FRONTEND_URL}/${CONFIG.DOMAIN.FRONTEND_VERIFY_EMAIL_ACCOUNT.replace('{{token}}', token)}`; //create verification link
-  template = template.replace('{{verifyLink}}', verifyLink);                   //replace link with template url string
+  const token = commonFunctions.encryptJwt(jwtPayload);
+  let template = emailTemplate.WELCOME_VERIFICATION_EMAIL;
+  template = commonFunctions.getTemplateString(user.name, CONFIG.DOMAIN.FRONTEND_VERIFY_EMAIL_ACCOUNT.replace('{{token}}', token), template);
   const email = {
     to: payload.email,
     from: process.env.SMPT_EMAIL,
@@ -118,12 +116,21 @@ authService.forgotPassword = async (request) => {
     throw CONSTANTS.RESPONSE.ERROR.DATA_NOT_FOUND(CONSTANTS.MESSAGES.NO_USER_FOUND);
   }
   let resetPasswordToken = commonFunctions.encryptJwt({ _id: user._id, email: user.email });
-  let resetPasswordLink = CONFIG.DOMAIN.FRONTEND_CHANGE_PASSWORD_URL.replace('{{token}}', resetPasswordToken);
+  let resetPasswordLink = `${CONFIG.DOMAIN.FRONTEND_URL}/${CONFIG.DOMAIN.FRONTEND_CHANGE_PASSWORD_URL.replace('{{token}}', resetPasswordToken)}`;
   user.resetPasswordToken = resetPasswordToken;
+  user.resePasswordSession = new Date();
   await user.save();
-  let emailData = commonFunctions.emailTypes(user, CONSTANTS.EMAIL_TYPES.FORGOT_PASSWORD_EMAIL, { link: resetPasswordLink });
-  let emailContent = commonFunctions.renderTemplate(emailData.template, emailData.data);
-  let emailResponse = commonFunctions.sendEmail(user.email, emailData.Subject, emailContent).then(r => { }, console.log);
+  // let emailData = commonFunctions.emailTypes(user, CONSTANTS.EMAIL_TYPES.FORGOT_PASSWORD_EMAIL, { link: resetPasswordLink });
+  // let emailContent = commonFunctions.renderTemplate(emailData.template, emailData.data);
+  // let emailResponse = commonFunctions.sendEmail(user.email, emailData.Subject, emailContent).then(r => { }, console.log);
+  const email = {
+    to: user.email,
+    from: process.env.SMPT_EMAIL,
+    subject: 'Reset Password',
+
+  }
+  transporter.sendMail(email);
+
   return user;
 }
 
